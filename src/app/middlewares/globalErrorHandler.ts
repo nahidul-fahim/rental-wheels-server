@@ -3,6 +3,7 @@ import { TErrorSources } from "../interface/error";
 import config from "../config";
 
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const globalErrorHandler: ErrorRequestHandler = ((err, req, res, next) => {
 
     console.log("Global error handler:", err)
