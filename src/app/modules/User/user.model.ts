@@ -22,8 +22,9 @@ const userSchema = new Schema<TUser>({
     },
     password: {
         type: String,
+        select: 0,
         required: [true, 'Password is required'],
-        minlength: [6, "Password must be at least 6 characters long"]
+        minlength: [6, "Password must be at least 6 characters long"],
     },
     phone: {
         type: String,
@@ -35,7 +36,12 @@ const userSchema = new Schema<TUser>({
         required: [true, 'Address is required'],
         trim: true,
     }
-}, { timestamps: true });
+},
+    {
+        timestamps: true,
+        versionKey: false
+    }
+);
 
 
 // hash password before saving to db
