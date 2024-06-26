@@ -17,7 +17,7 @@ const signInUser = async (payload: TSignInUser) => {
     // checking password
     const isPasswordMatched = comparePassword(payload.password, user.password);
     if (!isPasswordMatched) {
-        throw new AppError(httpStatus.NOT_FOUND, "Password is incorrect!")
+        throw new AppError(httpStatus.FORBIDDEN, "Password is incorrect!")
     }
     const { password, ...others } = user.toObject();
     return others;

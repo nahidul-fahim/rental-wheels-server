@@ -64,14 +64,12 @@ const globalErrorHandler: ErrorRequestHandler = ((err, req, res, next) => {
     }
 
 
-
-
+    // response to client side
     return res.status(statusCode).json({
         success: false,
         message,
         errorSources,
         stack: config.NODE_ENV === "development" ? err?.stack : null,
-        // err
     })
 })
 
