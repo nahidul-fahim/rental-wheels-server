@@ -3,8 +3,8 @@ import httpStatus from "http-status";
 import AppError from "../../errors/AppError";
 import { User } from "../User/user.model";
 import { TSignInUser } from "./auth.interface";
-import { comparePassword } from "./auth.utils";
-
+import { comparePassword, generateToken } from "./auth.utils";
+import config from "../../config";
 
 
 // sign in user
@@ -19,8 +19,23 @@ const signInUser = async (payload: TSignInUser) => {
     if (!isPasswordMatched) {
         throw new AppError(httpStatus.FORBIDDEN, "Password is incorrect!")
     }
+
+
+    const jwtPayload = {
+        userEmail: user?.email,
+        userRole: user?.role,
+    }
+
+    // generate access token
+    const accessToken = generateToken(
+        jwtPayload,
+        config.jwt_access_secret as string,
+        config.jwt_access_expires_in as string
+    )
+
+
     const { password, ...others } = user.toObject();
-    return others;
+    return { others, accessToken };
 }
 
 

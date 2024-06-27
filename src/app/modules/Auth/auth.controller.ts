@@ -10,8 +10,9 @@ const signInController = catchAsync(async (req, res) => {
     sendResponse(res, {
         statusCode: httpStatus.OK,
         success: true,
-        message: "User fetched successfully!",
-        data: result
+        message: "User logged in successfully",
+        data: result.others,
+        token: result.accessToken
     })
 })
 
