@@ -1,5 +1,3 @@
-import httpStatus from "http-status";
-import AppError from "../../errors/AppError";
 import { TCar } from "./car.interface";
 import { Car } from "./car.model";
 
