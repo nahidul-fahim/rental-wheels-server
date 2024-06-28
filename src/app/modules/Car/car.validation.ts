@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-
+// create validation schema
 const createCarValidationSchema = z.object({
     body: z.object({
         name: z.string({
@@ -33,4 +33,36 @@ const createCarValidationSchema = z.object({
 });
 
 
-export const CarValidation = { createCarValidationSchema }
+// update validation schema
+const updateCarValidationSchema = z.object({
+    body: z.object({
+        name: z.string({
+            invalid_type_error: "Name must be a string",
+        }).optional(),
+        description: z.string({
+            invalid_type_error: "Description must be a string",
+        }).optional(),
+        color: z.string({
+            invalid_type_error: "Color must be a string",
+        }).optional(),
+        isElectric: z.boolean({
+            invalid_type_error: "isElectric must be a boolean",
+        }).optional(),
+        features: z
+            .array(z.string({
+                invalid_type_error: "Features must be string"
+            }))
+            .optional(),
+        pricePerHour: z
+            .number()
+            .positive({ message: "Price per hour must be a positive number" })
+            .optional(),
+    })
+});
+
+
+
+export const CarValidation = {
+    createCarValidationSchema,
+    updateCarValidationSchema
+}

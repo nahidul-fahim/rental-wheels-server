@@ -11,15 +11,29 @@ const router = Router();
 // create new car
 router.post(
     "/",
+    auth(USER_ROLE.admin),
     validateRequest(CarValidation.createCarValidationSchema),
     CarController.createNewCar
 )
 
-// create new car
+// get all cars
 router.get(
     "/",
-    auth(USER_ROLE.admin),
     CarController.getAllCars
+)
+
+// get single car
+router.get(
+    "/:id",
+    CarController.getSingleCar
+)
+
+// update single car
+router.put(
+    "/:id",
+    auth(USER_ROLE.admin),
+    validateRequest(CarValidation.updateCarValidationSchema),
+    CarController.updateCar
 )
 
 
