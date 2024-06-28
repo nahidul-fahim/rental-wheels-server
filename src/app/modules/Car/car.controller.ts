@@ -5,7 +5,7 @@ import sendResponse from "../../utils/sendResponse";
 import httpStatus from "http-status";
 
 
-
+// create new car controller
 const createNewCar = catchAsync(async (req: Request, res: Response) => {
     const carData = req.body;
     const result = await CarServices.createNewCarIntoDb(carData);
@@ -19,7 +19,21 @@ const createNewCar = catchAsync(async (req: Request, res: Response) => {
 })
 
 
+// get all car controller
+const getAllCars = catchAsync(async (req: Request, res: Response) => {
+    const result = await CarServices.getAllCarsFromDb();
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: "Cars retrieved successfully",
+        data: result
+    })
+})
+
+
 
 export const CarController = {
-    createNewCar
+    createNewCar,
+    getAllCars,
 };
