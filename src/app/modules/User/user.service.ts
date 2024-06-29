@@ -4,6 +4,7 @@ import { TUser } from "./user.interface";
 import { User } from "./user.model";
 
 
+
 const createUserIntoDb = async (payload: TUser) => {
     // checking if the user exists
     const isExistingUser = await User.isUserExistsByEmail(payload.email)

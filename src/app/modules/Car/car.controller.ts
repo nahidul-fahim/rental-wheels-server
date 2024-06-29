@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
 import catchAsync from "../../utils/catchAsync";
-import { CarServices } from "./car.service";
 import sendResponse from "../../utils/sendResponse";
 import httpStatus from "http-status";
+import { CarServices } from "./car.service";
 
 
 // create new car controller
@@ -33,7 +33,7 @@ const getAllCars = catchAsync(async (req: Request, res: Response) => {
 
 
 // get single car controller
-const getSingleCar = catchAsync(async (req, res) => {
+const getSingleCar = catchAsync(async (req: Request, res: Response) => {
     const id = req.params.id;
     const result = await CarServices.getSingleCarFromDb(id);
 
@@ -47,7 +47,7 @@ const getSingleCar = catchAsync(async (req, res) => {
 
 
 // update car controller
-const updateCar = catchAsync(async (req, res) => {
+const updateCar = catchAsync(async (req: Request, res: Response) => {
     const id = req.params.id;
     const updatedCarData = req.body;
     const result = await CarServices.updateCarIntoDb(id, updatedCarData);
@@ -61,10 +61,24 @@ const updateCar = catchAsync(async (req, res) => {
 })
 
 
+// delete car controller
+const deleteCar = catchAsync(async (req: Request, res: Response) => {
+    const id = req.params.id;
+    const result = await CarServices.deleteCarFromDb(id);
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: "Car deleted successfully",
+        data: result
+    })
+})
+
 
 export const CarController = {
     createNewCar,
     getAllCars,
     getSingleCar,
-    updateCar
+    updateCar,
+    deleteCar
 };

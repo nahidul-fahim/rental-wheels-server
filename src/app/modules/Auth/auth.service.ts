@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import httpStatus from "http-status";
 import AppError from "../../errors/AppError";
-import { User } from "../User/user.model";
+import { User } from "../user/user.model";
 import { TSignInUser } from "./auth.interface";
 import { comparePassword, generateToken } from "./auth.utils";
 import config from "../../config";

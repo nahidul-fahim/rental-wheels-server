@@ -1,5 +1,9 @@
+import httpStatus from "http-status";
+import AppError from "../../errors/AppError";
 import { TCar } from "./car.interface";
 import { Car } from "./car.model";
+
+
 
 // create new car into db
 const createNewCarIntoDb = async (payload: TCar) => {
@@ -10,12 +14,18 @@ const createNewCarIntoDb = async (payload: TCar) => {
 // get all car from db
 const getAllCarsFromDb = async () => {
     const result = await Car.find();
+    if (!result) {
+        throw new AppError(httpStatus.NOT_FOUND, "No data found!")
+    }
     return result;
 }
 
 // get a single car
 const getSingleCarFromDb = async (id: string) => {
     const result = await Car.findById(id);
+    if (!result) {
+        throw new AppError(httpStatus.NOT_FOUND, "No data found!")
+    }
     return result;
 }
 
@@ -30,11 +40,25 @@ const updateCarIntoDb = async (id: string, payload: Partial<TCar>) => {
 }
 
 
+// delete a car
+const deleteCarFromDb = async (id: string) => {
+    const result = await Car.findByIdAndUpdate(
+        id,
+        { isDeleted: true },
+        {
+            new: true,
+            runValidators: true
+        });
+    return result;
+}
+
+
 
 
 export const CarServices = {
     createNewCarIntoDb,
     getAllCarsFromDb,
     getSingleCarFromDb,
-    updateCarIntoDb
+    updateCarIntoDb,
+    deleteCarFromDb
 };

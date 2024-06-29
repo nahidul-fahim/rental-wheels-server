@@ -50,4 +50,15 @@ const carSchema = new Schema<TCar>({
 )
 
 
+// excluding the deleted data
+carSchema.pre('find', function (next) {
+    this.find({ isDeleted: { $ne: true } });
+    next()
+});
+carSchema.pre('findOne', function (next) {
+    this.find({ isDeleted: { $ne: true } });
+    next()
+});
+
+
 export const Car = model<TCar>("car", carSchema)
