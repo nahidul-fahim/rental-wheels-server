@@ -8,7 +8,9 @@ import httpStatus from "http-status";
 // booking a car controller
 const bookACar = catchAsync(async (req: Request, res: Response) => {
     const userData = req.user;
-    const result = await CarBookingServices.bookACarIntoDB(req.body, userData.userId);
+    const { carId, ...others } = req.body;
+    const formattedBookingData = { car: carId, ...others };
+    const result = await CarBookingServices.bookACarIntoDB(formattedBookingData, userData.userId);
 
     sendResponse(res, {
         statusCode: httpStatus.CREATED,
@@ -19,6 +21,21 @@ const bookACar = catchAsync(async (req: Request, res: Response) => {
 })
 
 
+// getting all the bookings of a user controller
+const getUsersBookings = catchAsync(async (req: Request, res: Response) => {
+    const { userId } = req.user;
+    const result = await CarBookingServices.getUsersBookingsFromDb(userId);
+
+    sendResponse(res, {
+        statusCode: httpStatus.CREATED,
+        success: true,
+        message: "My Bookings retrieved successfully",
+        data: result
+    })
+})
+
+
 export const CarBooking = {
     bookACar,
+    getUsersBookings,
 }

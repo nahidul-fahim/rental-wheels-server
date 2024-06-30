@@ -17,6 +17,13 @@ router.post(
     CarBooking.bookACar
 )
 
+// get user's bookings
+router.get(
+    "/my-bookings",
+    auth(USER_ROLE.user),
+    CarBooking.getUsersBookings
+)
+
 
 
 export const CarBookingRoutes = router;

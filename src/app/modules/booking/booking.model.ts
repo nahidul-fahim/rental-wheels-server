@@ -3,7 +3,7 @@ import { TCarBooking } from "./booking.interface";
 
 
 const bookingSchema = new Schema<TCarBooking>({
-    carId: {
+    car: {
         type: Schema.Types.ObjectId,
         required: [true, "Car ID is required"],
         ref: "Car"

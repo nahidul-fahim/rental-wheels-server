@@ -1,8 +1,7 @@
 import { Types } from "mongoose";
 
 export type TCarBooking = {
-    // car: Types.ObjectId;
-    carId: Types.ObjectId;
+    car: Types.ObjectId;
     user: Types.ObjectId;
     date: string;
     startTime: string;
