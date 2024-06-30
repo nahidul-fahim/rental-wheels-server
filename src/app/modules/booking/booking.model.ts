@@ -4,9 +4,13 @@ import { TCarBooking } from "./booking.interface";
 
 const bookingSchema = new Schema<TCarBooking>({
     carId: {
-        type: String,
+        type: Schema.Types.ObjectId,
         required: [true, "Car ID is required"],
-        trim: true
+        ref: "Car"
+    },
+    user: {
+        type: Schema.Types.ObjectId,
+        ref: "User"
     },
     date: {
         type: String,
@@ -29,11 +33,12 @@ const bookingSchema = new Schema<TCarBooking>({
         required: true,
         trim: true
     }
-}, {
-    timestamps: true,
-    versionKey: false
-})
+},
+    {
+        timestamps: true,
+        versionKey: false
+    })
 
 
 
-export const Booking = model<TCarBooking>("booking", bookingSchema)
+export const Booking = model<TCarBooking>("Booking", bookingSchema)

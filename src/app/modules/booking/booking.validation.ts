@@ -18,8 +18,6 @@ const carBookingValidationSchema = z.object({
 })
 
 
-
-
 export const BookingValidation = {
     carBookingValidationSchema,
 }

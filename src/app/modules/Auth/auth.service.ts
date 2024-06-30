@@ -22,6 +22,7 @@ const signInUser = async (payload: TSignInUser) => {
 
 
     const jwtPayload = {
+        userId: user?._id,
         userEmail: user?.email,
         userRole: user?.role,
     }

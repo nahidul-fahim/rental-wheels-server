@@ -69,4 +69,4 @@ userSchema.statics.isUserExistsByEmail = async function (email: string) {
 };
 
 
-export const User = model<TUser, UserModel>('user', userSchema)
+export const User = model<TUser, UserModel>('User', userSchema)
