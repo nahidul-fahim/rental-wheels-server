@@ -76,9 +76,16 @@ const deleteCar = catchAsync(async (req: Request, res: Response) => {
 
 
 // return car controller
-const returnCar = async (req: Request, res: Response) => {
-    console.log("Request body:", req.body)
-}
+const returnCar = catchAsync(async (req: Request, res: Response) => {
+    const result = await CarServices.returnCarIntoDb(req?.body);
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: "Car returned successfully",
+        data: result
+    })
+})
 
 
 export const CarController = {

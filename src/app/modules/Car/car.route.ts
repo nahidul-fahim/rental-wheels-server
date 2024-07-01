@@ -22,6 +22,14 @@ router.get(
     CarController.getAllCars
 )
 
+// return a car
+router.put(
+    "/return",
+    auth(USER_ROLE.admin),
+    validateRequest(CarValidation.carReturnValidationSchema),
+    CarController.returnCar
+)
+
 // get single car
 router.get(
     "/:id",
@@ -41,19 +49,6 @@ router.delete(
     "/:id",
     auth(USER_ROLE.admin),
     CarController.deleteCar
-)
-
-router.put(
-    "/test",
-    CarController.returnCar
-)
-
-// return a car
-router.put(
-    "/return",
-    auth(USER_ROLE.admin),
-    validateRequest(CarValidation.carReturnValidationSchema),
-    CarController.returnCar
 )
 
 

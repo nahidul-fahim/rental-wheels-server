@@ -1,8 +1,8 @@
 import { Schema, model } from "mongoose";
-import { TCarBooking } from "./booking.interface";
+import { BookingModel, TCarBooking } from "./booking.interface";
 
 
-const bookingSchema = new Schema<TCarBooking>({
+const bookingSchema = new Schema<TCarBooking, BookingModel>({
     car: {
         type: Schema.Types.ObjectId,
         required: [true, "Car ID is required"],
@@ -37,8 +37,14 @@ const bookingSchema = new Schema<TCarBooking>({
     {
         timestamps: true,
         versionKey: false
-    })
+    }
+)
+
+
+bookingSchema.statics.isBookingExistsById = async function (id: string) {
+    return await Booking.findById(id)
+}
 
 
 
-export const Booking = model<TCarBooking>("Booking", bookingSchema)
+export const Booking = model<TCarBooking, BookingModel>("Booking", bookingSchema)

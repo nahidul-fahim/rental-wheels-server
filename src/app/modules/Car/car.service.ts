@@ -56,7 +56,57 @@ const deleteCarFromDb = async (id: string) => {
 }
 
 
+// return a car and update necessary data
+const returnCarIntoDb = async (payload: TCarReturn) => {
+    const id = payload?.bookingId;
+    const booking = await Booking.isBookingExistsById(id);
+    if (!booking) {
+        throw new AppError(httpStatus.NOT_FOUND, "Booking not found!")
+    }
 
+    const session = await mongoose.startSession();
+
+    try {
+        session.startTransaction();
+
+        // update car status
+        const updateCarStatus = await Car.findByIdAndUpdate(
+            booking?.car,
+            { status: 'available' },
+            { new: true, session }
+        );
+        if (!updateCarStatus) {
+            throw new AppError(httpStatus.NOT_FOUND, "Failed to return car!");
+        }
+
+        // calculate total cost
+        const totalBookedTime = await totalTime(
+            booking?.startTime as string,
+            payload?.endTime as string
+        );
+
+        const car = await Car.findById(booking?.car);
+
+        const totalCost = totalBookedTime * (car?.pricePerHour as number);
+        const updatedTotalCost = await Booking.findByIdAndUpdate(
+            id,
+            { totalCost: totalCost, endTime: payload?.endTime },
+            { new: true, session }
+        )
+            .populate('car')
+            .populate({ path: 'user', select: '-createdAt -updatedAt' });
+
+        await session.commitTransaction();
+        await session.endSession();
+
+        return updatedTotalCost;
+
+    } catch (error) {
+        await session.abortTransaction();
+        await session.endSession();
+        throw new AppError(httpStatus.NOT_FOUND, "Failed to return car")
+    }
+};
 
 
 
@@ -67,5 +117,5 @@ export const CarServices = {
     getSingleCarFromDb,
     updateCarIntoDb,
     deleteCarFromDb,
-    // returnCarIntoDb
+    returnCarIntoDb
 };
