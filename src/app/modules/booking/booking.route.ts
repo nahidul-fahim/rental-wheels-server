@@ -24,6 +24,13 @@ router.get(
     CarBooking.getUsersBookings
 )
 
+// get all bookings for admin
+router.get(
+    "/",
+    auth(USER_ROLE.admin),
+    CarBooking.getAllBookings
+)
+
 
 
 export const CarBookingRoutes = router;

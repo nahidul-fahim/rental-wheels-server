@@ -35,7 +35,22 @@ const getUsersBookings = catchAsync(async (req: Request, res: Response) => {
 })
 
 
+// getting all the bookings for admin
+const getAllBookings = catchAsync(async (req: Request, res: Response) => {
+    const query = req?.query;
+    const result = await CarBookingServices.getAllBookingsFromDb(query);
+
+    sendResponse(res, {
+        statusCode: httpStatus.CREATED,
+        success: true,
+        message: "Bookings retrieved successfully",
+        data: result
+    })
+})
+
+
 export const CarBooking = {
     bookACar,
     getUsersBookings,
+    getAllBookings
 }

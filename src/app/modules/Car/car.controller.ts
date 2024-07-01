@@ -75,10 +75,17 @@ const deleteCar = catchAsync(async (req: Request, res: Response) => {
 })
 
 
+// return car controller
+const returnCar = async (req: Request, res: Response) => {
+    console.log("Request body:", req.body)
+}
+
+
 export const CarController = {
     createNewCar,
     getAllCars,
     getSingleCar,
     updateCar,
-    deleteCar
+    deleteCar,
+    returnCar
 };

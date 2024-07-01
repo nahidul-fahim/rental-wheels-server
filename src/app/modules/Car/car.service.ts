@@ -1,7 +1,10 @@
 import httpStatus from "http-status";
 import AppError from "../../errors/AppError";
-import { TCar } from "./car.interface";
+import { TCar, TCarReturn } from "./car.interface";
 import { Car } from "./car.model";
+import { Booking } from "../booking/booking.model";
+import mongoose from "mongoose";
+import { totalTime } from "./car.utils";
 
 
 
@@ -55,10 +58,14 @@ const deleteCarFromDb = async (id: string) => {
 
 
 
+
+
+
 export const CarServices = {
     createNewCarIntoDb,
     getAllCarsFromDb,
     getSingleCarFromDb,
     updateCarIntoDb,
-    deleteCarFromDb
+    deleteCarFromDb,
+    // returnCarIntoDb
 };

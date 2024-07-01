@@ -43,6 +43,18 @@ router.delete(
     CarController.deleteCar
 )
 
+router.put(
+    "/test",
+    CarController.returnCar
+)
+
+// return a car
+router.put(
+    "/return",
+    auth(USER_ROLE.admin),
+    validateRequest(CarValidation.carReturnValidationSchema),
+    CarController.returnCar
+)
 
 
 export const CarRoutes = router;

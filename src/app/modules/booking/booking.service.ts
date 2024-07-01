@@ -13,6 +13,11 @@ const bookACarIntoDB = async (payload: TCarBooking, user: string) => {
         user: user,
     };
 
+    const isCarBooked = await Car.findById(payload.car).select('status')
+    if (isCarBooked?.status === "unavailable") {
+        throw new AppError(httpStatus.CONFLICT, "The car is already booked!")
+    }
+
     const session = await mongoose.startSession();
 
     try {
@@ -57,7 +62,35 @@ const getUsersBookingsFromDb = async (user: string) => {
 }
 
 
+// get all bookings for admin
+const getAllBookingsFromDb = async (query: Record<string, unknown>) => {
+
+    type TFormattedQuery = {
+        car?: string;
+        date?: string;
+    }
+    const formattedQuery: TFormattedQuery = {}
+
+    if (query.carId && typeof query.carId === "string") {
+        formattedQuery.car = query.carId;
+    }
+    if (query.date && typeof query.date === "string") {
+        formattedQuery.date = query.date;
+    }
+
+    const result = await Booking.find(formattedQuery)
+        .populate('car')
+        .populate({ path: 'user', select: '-createdAt -updatedAt' })
+
+    if (result.length === 0) {
+        throw new AppError(httpStatus.NOT_FOUND, "No data found!")
+    }
+    return result;
+}
+
+
 export const CarBookingServices = {
     bookACarIntoDB,
-    getUsersBookingsFromDb
+    getUsersBookingsFromDb,
+    getAllBookingsFromDb
 }
