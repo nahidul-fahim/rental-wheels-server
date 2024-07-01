@@ -17,8 +17,8 @@ const createNewCarIntoDb = async (payload: TCar) => {
 // get all car from db
 const getAllCarsFromDb = async () => {
     const result = await Car.find();
-    if (!result) {
-        throw new AppError(httpStatus.NOT_FOUND, "No data found!")
+    if (result.length === 0) {
+        throw new AppError(httpStatus.NOT_FOUND, "No data found!", [])
     }
     return result;
 }
@@ -27,7 +27,7 @@ const getAllCarsFromDb = async () => {
 const getSingleCarFromDb = async (id: string) => {
     const result = await Car.findById(id);
     if (!result) {
-        throw new AppError(httpStatus.NOT_FOUND, "No data found!")
+        throw new AppError(httpStatus.NOT_FOUND, "No data found!", [])
     }
     return result;
 }

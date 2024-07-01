@@ -13,7 +13,7 @@ const auth = (...requiredRoles: TUserRole[]) => {
 
         // checking if the token exists
         if (!token) {
-            throw new AppError(httpStatus.UNAUTHORIZED, "You are not authorized!")
+            throw new AppError(httpStatus.UNAUTHORIZED, "You have no access to this route")
         }
 
         // checking if the provided token is valid
@@ -22,13 +22,13 @@ const auth = (...requiredRoles: TUserRole[]) => {
             config.jwt_access_secret as string,
             function (err, decoded) {
                 if (err) {
-                    throw new AppError(httpStatus.UNAUTHORIZED, "You are not authorized!")
+                    throw new AppError(httpStatus.UNAUTHORIZED, "You have no access to this route")
                 }
                 const { userRole } = decoded as JwtPayload;
 
                 // checking for the right user role
                 if (requiredRoles && !requiredRoles.includes(userRole)) {
-                    throw new AppError(httpStatus.UNAUTHORIZED, "You are not authorized!")
+                    throw new AppError(httpStatus.UNAUTHORIZED, "You have no access to this route")
                 }
                 req.user = decoded as JwtPayload;
                 next();
