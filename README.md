@@ -27,7 +27,7 @@ Rental Wheels is designed to streamline the process of renting cars. It provides
 
 - User authentication and authorization
 - Cars booking
-- Car add, update features for admin
+- Car add, update, delete features for admin
 - Car rent management for admins
 - Car return system for admin and automatically counts total rent cost based on total rent hours and price per hour for the car
 
@@ -90,7 +90,7 @@ To run the application locally:
 npm run dev
 ```
 
-The application will be available at `http://localhost:3000`.
+The application will be available at `http://localhost:5000`.
 
 ## API Endpoints
 
