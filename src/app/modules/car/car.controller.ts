@@ -21,7 +21,7 @@ const createNewCar = catchAsync(async (req: Request, res: Response) => {
 
 // get all car controller
 const getAllCars = catchAsync(async (req: Request, res: Response) => {
-    const result = await CarServices.getAllCarsFromDb();
+    const result = await CarServices.getAllCarsFromDb(req.query);
 
     sendResponse(res, {
         statusCode: httpStatus.OK,

@@ -23,6 +23,10 @@ const carSchema = new Schema<TCar>({
         type: Boolean,
         required: [true, "isElectric is required"]
     },
+    carType: {
+        type: String,
+        required: true
+    },
     features: {
         type: [String],
         required: true,

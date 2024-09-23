@@ -19,6 +19,10 @@ const createCarValidationSchema = z.object({
             invalid_type_error: "isElectric must be a boolean",
             required_error: "isElectric is required",
         }),
+        carType: z.string({
+            invalid_type_error: "Car type must be a string",
+            required_error: "Car type is required"
+        }),
         features: z
             .array(z.string({
                 invalid_type_error: "Features must be string"

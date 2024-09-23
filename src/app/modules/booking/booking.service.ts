@@ -58,6 +58,10 @@ const getUsersBookingsFromDb = async (user: string) => {
     const result = await Booking.find({ user })
         .populate('car')
         .populate({ path: 'user', select: '-createdAt -updatedAt' })
+
+    if (result.length === 0) {
+        throw new AppError(httpStatus.NOT_FOUND, "No Data Found", [])
+    }
     return result;
 }
 
@@ -83,7 +87,7 @@ const getAllBookingsFromDb = async (query: Record<string, unknown>) => {
         .populate({ path: 'user', select: '-createdAt -updatedAt' })
 
     if (result.length === 0) {
-        throw new AppError(httpStatus.NOT_FOUND, "No data found!")
+        throw new AppError(httpStatus.NOT_FOUND, "No data found!", [])
     }
     return result;
 }

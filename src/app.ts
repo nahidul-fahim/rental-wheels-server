@@ -11,12 +11,13 @@ app.use(express.json());
 app.use(cors());
 
 // application routes
-app.use("/api", router)
+app.use("/api/v1", router)
 
 // testing route
 app.get('/', (req: Request, res: Response) => {
-    res.send('Hello World from Rental Wheels!')
+    res.send('Rental Wheels is up and running!')
 })
+
 
 
 // global error handler

@@ -6,7 +6,10 @@ import { Booking } from "../booking/booking.model";
 import mongoose from "mongoose";
 import { totalTime } from "./car.utils";
 
-
+// all queries type
+type AllQueriesType = {
+    carType?: string;
+}
 
 // create new car into db
 const createNewCarIntoDb = async (payload: TCar) => {
@@ -15,13 +18,19 @@ const createNewCarIntoDb = async (payload: TCar) => {
 }
 
 // get all car from db
-const getAllCarsFromDb = async () => {
-    const result = await Car.find();
+const getAllCarsFromDb = async (query: Record<string, unknown>) => {
+    const allQueries: AllQueriesType = {};
+
+    // Apply filters if they exist
+    if (query.carType) {
+        allQueries.carType = query.carType as string;
+    }
+    const result = await Car.find(allQueries);
     if (result.length === 0) {
-        throw new AppError(httpStatus.NOT_FOUND, "No data found!", [])
+        throw new AppError(httpStatus.NOT_FOUND, "No cars found matching the criteria", []);
     }
     return result;
-}
+};
 
 // get a single car
 const getSingleCarFromDb = async (id: string) => {
@@ -32,7 +41,6 @@ const getSingleCarFromDb = async (id: string) => {
     return result;
 }
 
-
 // update car data
 const updateCarIntoDb = async (id: string, payload: Partial<TCar>) => {
     const result = await Car.findByIdAndUpdate(id, payload, {
@@ -41,7 +49,6 @@ const updateCarIntoDb = async (id: string, payload: Partial<TCar>) => {
     });
     return result;
 }
-
 
 // delete a car
 const deleteCarFromDb = async (id: string) => {
@@ -54,7 +61,6 @@ const deleteCarFromDb = async (id: string) => {
         });
     return result;
 }
-
 
 // return a car and update necessary data
 const returnCarIntoDb = async (payload: TCarReturn) => {
@@ -107,8 +113,6 @@ const returnCarIntoDb = async (payload: TCarReturn) => {
         throw new AppError(httpStatus.NOT_FOUND, "Failed to return car")
     }
 };
-
-
 
 
 export const CarServices = {
