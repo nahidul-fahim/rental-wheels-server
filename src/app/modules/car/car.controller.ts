@@ -10,7 +10,6 @@ const createNewCar = catchAsync(async (req: Request, res: Response) => {
     const carData = req.body;
     const cloudinaryResult = req.cloudinaryResult;
     const result = await CarServices.createNewCarIntoDb(cloudinaryResult, carData);
-
     sendResponse(res, {
         statusCode: httpStatus.CREATED,
         success: true,
@@ -23,7 +22,6 @@ const createNewCar = catchAsync(async (req: Request, res: Response) => {
 // get all car controller
 const getAllCars = catchAsync(async (req: Request, res: Response) => {
     const result = await CarServices.getAllCarsFromDb(req.query);
-
     sendResponse(res, {
         statusCode: httpStatus.OK,
         success: true,
@@ -37,7 +35,6 @@ const getAllCars = catchAsync(async (req: Request, res: Response) => {
 const getSingleCar = catchAsync(async (req: Request, res: Response) => {
     const id = req.params.id;
     const result = await CarServices.getSingleCarFromDb(id);
-
     sendResponse(res, {
         statusCode: httpStatus.OK,
         success: true,
@@ -50,8 +47,9 @@ const getSingleCar = catchAsync(async (req: Request, res: Response) => {
 // update car controller
 const updateCar = catchAsync(async (req: Request, res: Response) => {
     const id = req.params.id;
+    const cloudinaryResult = req.cloudinaryResult;
     const updatedCarData = req.body;
-    const result = await CarServices.updateCarIntoDb(id, updatedCarData);
+    const result = await CarServices.updateCarIntoDb(cloudinaryResult, id, updatedCarData);
 
     sendResponse(res, {
         statusCode: httpStatus.OK,

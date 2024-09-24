@@ -47,9 +47,16 @@ router.get(
 router.put(
     "/:id",
     auth(USER_ROLE.admin),
+    upload.single('file'),
+    sendImageToCloudinary,
+    (req: Request, res: Response, next: NextFunction) => {
+        req.body = JSON.parse(req.body.data);
+        next();
+    },
     validateRequest(CarValidation.updateCarValidationSchema),
     CarController.updateCar
 )
+
 
 // delete a car
 router.delete(

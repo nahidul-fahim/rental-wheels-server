@@ -48,7 +48,11 @@ const getSingleCarFromDb = async (id: string) => {
 }
 
 // update car data
-const updateCarIntoDb = async (id: string, payload: Partial<TCar>) => {
+const updateCarIntoDb = async (cloudinaryResult: any, id: string, payload: Partial<TCar>) => {
+    if (cloudinaryResult && cloudinaryResult.secure_url) {
+        // Update the payload with the new image URL
+        payload.image = cloudinaryResult.secure_url;
+    }
     const result = await Car.findByIdAndUpdate(id, payload, {
         new: true,
         runValidators: true
