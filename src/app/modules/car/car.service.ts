@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import httpStatus from "http-status";
 import AppError from "../../errors/AppError";
 import { TCar, TCarReturn } from "./car.interface";
@@ -12,7 +13,12 @@ type AllQueriesType = {
 }
 
 // create new car into db
-const createNewCarIntoDb = async (payload: TCar) => {
+const createNewCarIntoDb = async (cloudinaryResult: any, payload: TCar) => {
+    if (!cloudinaryResult || !cloudinaryResult.secure_url) {
+        throw new AppError(httpStatus.BAD_REQUEST, "Car image upload failed");
+    }
+    // save image to payload
+    payload.image = cloudinaryResult.secure_url;
     const result = await Car.create(payload);
     return result;
 }

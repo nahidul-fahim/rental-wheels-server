@@ -7,6 +7,7 @@ export type TCar = {
     description: string;
     color: string;
     isElectric: boolean;
+    image: string;
     carType: string;
     features: string[];
     pricePerHour: number;

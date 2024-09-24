@@ -8,7 +8,8 @@ import { CarServices } from "./car.service";
 // create new car controller
 const createNewCar = catchAsync(async (req: Request, res: Response) => {
     const carData = req.body;
-    const result = await CarServices.createNewCarIntoDb(carData);
+    const cloudinaryResult = req.cloudinaryResult;
+    const result = await CarServices.createNewCarIntoDb(cloudinaryResult, carData);
 
     sendResponse(res, {
         statusCode: httpStatus.CREATED,
