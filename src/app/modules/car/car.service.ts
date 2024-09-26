@@ -7,10 +7,6 @@ import { Booking } from "../booking/booking.model";
 import mongoose from "mongoose";
 import { totalTime } from "./car.utils";
 
-// all queries type
-type AllQueriesType = {
-    carType?: string;
-}
 
 // create new car into db
 const createNewCarIntoDb = async (cloudinaryResult: any, payload: TCar) => {
@@ -23,13 +19,11 @@ const createNewCarIntoDb = async (cloudinaryResult: any, payload: TCar) => {
     return result;
 }
 
-// get all car from db
+// get all cars from db
 const getAllCarsFromDb = async (query: Record<string, unknown>) => {
-    const allQueries: AllQueriesType = {};
-
-    // Apply filters if they exist
+    const allQueries: Record<string, unknown> = {};
     if (query.carType) {
-        allQueries.carType = query.carType as string;
+        allQueries.carType = { $regex: query.carType as string, $options: 'i' };
     }
     const result = await Car.find(allQueries);
     if (result.length === 0) {
