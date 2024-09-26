@@ -15,5 +15,28 @@ const signInValidationSchema = z.object({
     })
 })
 
+const forgotPasswordValidationSchema = z.object({
+    body: z.object({
+        email: z.string({
+            invalid_type_error: "Email must be string",
+            required_error: "Email is required!"
+        })
+            .email(),
+    })
+})
 
-export const AuthValidation = { signInValidationSchema };
+const resetPasswordValidationSchema = z.object({
+    body: z.object({
+        token: z.string({
+            invalid_type_error: "Token must be string",
+            required_error: "Token is required!"
+        }),
+        password: z.string({
+            invalid_type_error: "Password must be string",
+            required_error: "Password is required!"
+        }),
+    })
+})
+
+
+export const AuthValidation = { signInValidationSchema, forgotPasswordValidationSchema, resetPasswordValidationSchema };

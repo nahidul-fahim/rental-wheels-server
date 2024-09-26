@@ -9,6 +9,8 @@ export interface TUser {
     password: string;
     phone: string;
     address: string;
+    resetPasswordToken?: string;
+    resetPasswordTokenExpired?: Date;
 }
 
 export interface UserModel extends Model<TUser> {

@@ -13,4 +13,10 @@ export default ({
     cloudinary_cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
     cloudinary_api_key: process.env.CLOUDINARY_API_KEY,
     cloudinary_secret_key: process.env.CLOUDINARY_SECRET_KEY,
+    smtp_host: process.env.SMTP_HOST,
+    smtp_port: process.env.SMTP_PORT,
+    smtp_user: process.env.SMTP_USER,
+    smtp_pass: process.env.SMTP_PASS,
+    smtp_from_email: process.env.SMTP_FROM_EMAIL,
+    client_url: process.env.CLIENT_URL,
 })

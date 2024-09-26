@@ -16,5 +16,31 @@ const signInController = catchAsync(async (req, res) => {
     })
 })
 
+// forgot password controller
+const forgotPasswordController = catchAsync(async (req, res) => {
+    const { email } = req.body;
+    const result = await AuthServices.forgotPassword(email);
 
-export const AuthController = { signInController };
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: "Password reset email sent successfully",
+        data: result // TODO: remove this
+    })
+})
+
+// reset password controller
+const resetPasswordController = catchAsync(async (req, res) => {
+    const { token, password } = req.body;
+    await AuthServices.resetPassword(token, password);
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: "Password reset successfully",
+        data: {}
+    })
+})
+
+
+export const AuthController = { signInController, forgotPasswordController, resetPasswordController };
