@@ -8,7 +8,11 @@ import router from './app/routes';
 
 // parsers
 app.use(express.json());
-app.use(cors());
+const allowedOrigins = ['http://localhost:5173'];
+app.use(cors({
+    origin: allowedOrigins,
+    credentials: true
+}));
 
 // application routes
 app.use("/api/v1", router)
@@ -18,14 +22,10 @@ app.get('/', (req: Request, res: Response) => {
     res.send('Rental Wheels is up and running!')
 })
 
-
-
 // global error handler
 app.use(globalErrorHandler)
 
-
 // not found handler
 app.use(notFound)
-
 
 export default app;
