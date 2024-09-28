@@ -25,13 +25,13 @@ const getAllCarsFromDb = async (query: Record<string, unknown>) => {
     if (query.carType) {
         allQueries.carType = { $regex: query.carType as string, $options: 'i' };
     }
-    const result = await Car.find(allQueries);
-    if (result.length === 0) {
+    const allCars = await Car.find(allQueries);
+    if (allCars.length === 0) {
         throw new AppError(httpStatus.NOT_FOUND, "No cars found matching the criteria", []);
     }
     // get all unique car types
     const uniqueCarTypes = await Car.distinct('carType');
-    return { result, uniqueCarTypes };
+    return { allCars, uniqueCarTypes };
 };
 
 // get a single car
