@@ -29,7 +29,9 @@ const getAllCarsFromDb = async (query: Record<string, unknown>) => {
     if (result.length === 0) {
         throw new AppError(httpStatus.NOT_FOUND, "No cars found matching the criteria", []);
     }
-    return result;
+    // get all unique car types
+    const uniqueCarTypes = await Car.distinct('carType');
+    return { result, uniqueCarTypes };
 };
 
 // get a single car
