@@ -3,8 +3,7 @@ import AppError from "../../errors/AppError";
 import { TUser } from "./user.interface";
 import { User } from "./user.model";
 
-
-
+// create new user into db
 const createUserIntoDb = async (payload: TUser) => {
     // checking if the user exists
     const isExistingUser = await User.isUserExistsByEmail(payload.email)
@@ -17,5 +16,21 @@ const createUserIntoDb = async (payload: TUser) => {
     return others;
 }
 
+// get single user by id from db
+const getUserByIdFromDb = async (id: string) => {
+    const user = await User.findById(id);
+    return user;
+}
 
-export const UserServices = { createUserIntoDb };
+// update user into db
+const updateUserInDb = async (id: string, payload: Partial<TUser>) => {
+    const user = await User.findById(id);
+    if (!user) {
+        throw new AppError(httpStatus.NOT_FOUND, "User not found");
+    }
+    const result = await User.findByIdAndUpdate(id, payload, { new: true });
+    return result;
+}
+
+
+export const UserServices = { createUserIntoDb, getUserByIdFromDb, updateUserInDb };

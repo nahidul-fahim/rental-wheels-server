@@ -36,6 +36,10 @@ const userSchema = new Schema<TUser, UserModel>({
         required: [true, 'Address is required'],
         trim: true,
     },
+    preferences: {
+        type: String,
+        required: false
+    },
     resetPasswordToken: {
         type: String,
         required: false

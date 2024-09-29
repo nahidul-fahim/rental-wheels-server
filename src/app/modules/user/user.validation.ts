@@ -24,8 +24,33 @@ const createUserValidationSchema = z.object({
             invalid_type_error: "Address must be a string",
             required_error: "Address is required"
         }),
+        preferences: z.string({
+            invalid_type_error: "Preferences must be a string",
+        }).optional()
     })
 });
 
 
-export const UserValidation = { createUserValidationSchema }
+// update user validation schema
+const updateUserValidationSchema = z.object({
+    body: z.object({
+        name: z.string({
+            invalid_type_error: "Name must be a string"
+        }).optional(),
+        email: z.string({
+            invalid_type_error: "Email must be a string"
+        }).email().optional(),
+        phone: z.string({
+            invalid_type_error: "Phone must be a string"
+        }).optional(),
+        address: z.string({
+            invalid_type_error: "Address must be a string"
+        }).optional(),
+        preferences: z.string({
+            invalid_type_error: "Preferences must be a string",
+        }).optional()
+    })
+});
+
+
+export const UserValidation = { createUserValidationSchema, updateUserValidationSchema }
