@@ -53,6 +53,20 @@ const bookACarIntoDB = async (payload: TCarBooking, user: string) => {
 }
 
 
+// update a booking
+const updateBookingIntoDb = async (bookingId: string, status: string) => {
+    const isBookingExist = await Booking.findById(bookingId)
+    if (!isBookingExist) {
+        throw new AppError(httpStatus.NOT_FOUND, "Booking not found!", [])
+    };
+    if (isBookingExist?.status === "approved") {
+        throw new AppError(httpStatus.CONFLICT, "Booking already approved!", [])
+    };
+    const result = await Booking.findByIdAndUpdate(bookingId, { status }, { new: true })
+    return result;
+}
+
+
 // get user's bookings
 const getUsersBookingsFromDb = async (user: string) => {
     const result = await Booking.find({ user })
@@ -96,5 +110,6 @@ const getAllBookingsFromDb = async (query: Record<string, unknown>) => {
 export const CarBookingServices = {
     bookACarIntoDB,
     getUsersBookingsFromDb,
-    getAllBookingsFromDb
+    getAllBookingsFromDb,
+    updateBookingIntoDb
 }

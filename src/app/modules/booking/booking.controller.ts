@@ -20,6 +20,20 @@ const bookACar = catchAsync(async (req: Request, res: Response) => {
     })
 })
 
+// update a booking controller
+const updateBooking = catchAsync(async (req: Request, res: Response) => {
+    const { bookingId } = req.params;
+    const { status } = req.body;
+    const result = await CarBookingServices.updateBookingIntoDb(bookingId, status);
+
+    sendResponse(res, {
+        statusCode: httpStatus.CREATED,
+        success: true,
+        message: "Booking updated successfully",
+        data: result
+    })
+});
+
 
 // getting all the bookings of a user controller
 const getUsersBookings = catchAsync(async (req: Request, res: Response) => {
@@ -52,5 +66,6 @@ const getAllBookings = catchAsync(async (req: Request, res: Response) => {
 export const CarBooking = {
     bookACar,
     getUsersBookings,
-    getAllBookings
+    getAllBookings,
+    updateBooking
 }

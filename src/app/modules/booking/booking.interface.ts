@@ -3,6 +3,7 @@ import { Model, Types } from "mongoose";
 export interface TCarBooking {
     car: Types.ObjectId;
     user: Types.ObjectId;
+    status: "pending" | "approved" | "cancelled";
     date: string;
     startTime: string;
     endTime: null | string;

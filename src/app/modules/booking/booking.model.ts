@@ -12,6 +12,12 @@ const bookingSchema = new Schema<TCarBooking, BookingModel>({
         type: Schema.Types.ObjectId,
         ref: "User"
     },
+    status: {
+        type: String,
+        enum: ["pending", "approved", "cancelled"],
+        default: "pending",
+        required: true
+    },
     date: {
         type: String,
         required: [true, "Date is required"],
