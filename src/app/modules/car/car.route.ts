@@ -57,7 +57,6 @@ router.put(
     CarController.updateCar
 )
 
-
 // delete a car
 router.delete(
     "/:id",

@@ -99,7 +99,7 @@ const returnCarIntoDb = async (payload: TCarReturn) => {
 
         const car = await Car.findById(booking?.car);
 
-        const totalCost = totalBookedTime * (car?.pricePerHour as number);
+        const totalCost = (totalBookedTime * (car?.pricePerHour as number)).toFixed(2);
         const updatedTotalCost = await Booking.findByIdAndUpdate(
             id,
             { totalCost: totalCost, endTime: payload?.endTime },
