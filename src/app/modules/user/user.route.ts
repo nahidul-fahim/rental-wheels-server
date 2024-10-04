@@ -28,6 +28,15 @@ router.put(
     validateRequest(UserValidation.updateUserValidationSchema),
     UserController.updateUser
 );
+
+// update user status
+router.put(
+    "/user/status/:id",
+    auth(USER_ROLE.admin),
+    validateRequest(UserValidation.updateUserStatusValidationSchema),
+    UserController.updateUserStatus
+);
+
 // get all users
 router.get(
     "/users",

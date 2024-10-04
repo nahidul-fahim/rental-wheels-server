@@ -49,9 +49,19 @@ const updateUserValidationSchema = z.object({
         preferences: z.string({
             invalid_type_error: "Preferences must be a string",
         }).optional(),
-        isActive: z.boolean().optional()
+    })
+});
+
+// update user status validation schema
+const updateUserStatusValidationSchema = z.object({
+    body: z.object({
+        isActive: z.boolean({
+            invalid_type_error: "Status must be a boolean"
+        }),
+        role: z.enum(["user", "admin"]).optional()
     })
 });
 
 
-export const UserValidation = { createUserValidationSchema, updateUserValidationSchema }
+
+export const UserValidation = { createUserValidationSchema, updateUserValidationSchema, updateUserStatusValidationSchema }

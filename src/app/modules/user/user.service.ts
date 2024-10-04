@@ -32,6 +32,16 @@ const updateUserInDb = async (id: string, payload: Partial<TUser>) => {
     return result;
 };
 
+// update user status into db
+const updateUserStatusInDb = async (id: string, payload: Partial<TUser>) => {
+    const user = await User.findById(id);
+    if (!user) {
+        throw new AppError(httpStatus.NOT_FOUND, "User not found");
+    }
+    const result = await User.findByIdAndUpdate(id, payload, { new: true });
+    return result;
+};
+
 // get all users from db
 const getAllUsersFromDb = async () => {
     const users = await User.find();
@@ -39,4 +49,4 @@ const getAllUsersFromDb = async () => {
 };
 
 
-export const UserServices = { createUserIntoDb, getUserByIdFromDb, updateUserInDb, getAllUsersFromDb };
+export const UserServices = { createUserIntoDb, getUserByIdFromDb, updateUserInDb, updateUserStatusInDb, getAllUsersFromDb };
