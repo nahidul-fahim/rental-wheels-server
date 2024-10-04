@@ -48,7 +48,8 @@ const updateUserValidationSchema = z.object({
         }).optional(),
         preferences: z.string({
             invalid_type_error: "Preferences must be a string",
-        }).optional()
+        }).optional(),
+        isActive: z.boolean().optional()
     })
 });
 

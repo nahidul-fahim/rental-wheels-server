@@ -42,5 +42,16 @@ const updateUser = catchAsync(async (req: Request, res: Response) => {
     })
 });
 
+// get all users
+const getAllUsers = catchAsync(async (req: Request, res: Response) => {
+    const result = await UserServices.getAllUsersFromDb();
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: "Users fetched successfully",
+        data: result
+    })
+});
 
-export const UserController = { createNewUser, getUserById, updateUser };
+
+export const UserController = { createNewUser, getUserById, updateUser, getAllUsers };

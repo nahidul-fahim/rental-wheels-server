@@ -28,5 +28,11 @@ router.put(
     validateRequest(UserValidation.updateUserValidationSchema),
     UserController.updateUser
 );
+// get all users
+router.get(
+    "/users",
+    auth(USER_ROLE.admin),
+    UserController.getAllUsers
+);
 
 export const UserRoutes = router;

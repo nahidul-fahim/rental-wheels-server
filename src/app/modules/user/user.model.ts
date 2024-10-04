@@ -40,6 +40,10 @@ const userSchema = new Schema<TUser, UserModel>({
         type: String,
         required: false
     },
+    isActive: {
+        type: Boolean,
+        default: true
+    },
     resetPasswordToken: {
         type: String,
         required: false

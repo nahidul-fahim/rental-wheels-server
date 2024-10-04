@@ -30,7 +30,13 @@ const updateUserInDb = async (id: string, payload: Partial<TUser>) => {
     }
     const result = await User.findByIdAndUpdate(id, payload, { new: true });
     return result;
-}
+};
+
+// get all users from db
+const getAllUsersFromDb = async () => {
+    const users = await User.find();
+    return users;
+};
 
 
-export const UserServices = { createUserIntoDb, getUserByIdFromDb, updateUserInDb };
+export const UserServices = { createUserIntoDb, getUserByIdFromDb, updateUserInDb, getAllUsersFromDb };

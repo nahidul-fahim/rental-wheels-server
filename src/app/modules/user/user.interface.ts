@@ -10,6 +10,7 @@ export interface TUser {
     phone: string;
     address: string;
     preferences?: string;
+    isActive?: boolean;
     resetPasswordToken?: string;
     resetPasswordTokenExpired?: Date;
 }
