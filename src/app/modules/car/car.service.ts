@@ -6,6 +6,7 @@ import { Car } from "./car.model";
 import { Booking } from "../booking/booking.model";
 import mongoose from "mongoose";
 import { totalTime } from "./car.utils";
+import QueryBuilder from "../../builder/QueryBuilder";
 
 
 // create new car into db
@@ -21,17 +22,27 @@ const createNewCarIntoDb = async (cloudinaryResult: any, payload: TCar) => {
 
 // get all cars from db
 const getAllCarsFromDb = async (query: Record<string, unknown>) => {
-    const allQueries: Record<string, unknown> = {};
-    if (query.carType) {
-        allQueries.carType = { $regex: query.carType as string, $options: 'i' };
-    }
-    const allCars = await Car.find(allQueries);
+    const searchableFields = ["name", "description"];
+    const carQuery = new QueryBuilder(Car.find(), query)
+        .search(searchableFields)
+        .filter()
+
+    // getting all cars
+    const allCars = await carQuery.modelQuery;
+
     if (allCars.length === 0) {
         throw new AppError(httpStatus.NOT_FOUND, "No cars found matching the criteria", []);
     }
+
+    // getting the min price per hour
+    const lowestPriceCar = await Car.find().sort({ pricePerHour: 1 }).limit(1);
+    // getting the max price per hour
+    const highestPriceCar = await Car.find().sort({ pricePerHour: -1 }).limit(1);
+    const minPricePerHour = lowestPriceCar[0].pricePerHour;
+    const maxPricePerHour = highestPriceCar[0].pricePerHour;
     // get all unique car types
     const uniqueCarTypes = await Car.distinct('carType');
-    return { allCars, uniqueCarTypes };
+    return { allCars, uniqueCarTypes, minPricePerHour, maxPricePerHour };
 };
 
 // get a single car
