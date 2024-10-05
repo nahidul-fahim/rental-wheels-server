@@ -30,10 +30,6 @@ const getAllCarsFromDb = async (query: Record<string, unknown>) => {
     // getting all cars
     const allCars = await carQuery.modelQuery;
 
-    if (allCars.length === 0) {
-        throw new AppError(httpStatus.NOT_FOUND, "No cars found matching the criteria", []);
-    }
-
     // getting the min price per hour
     const lowestPriceCar = await Car.find().sort({ pricePerHour: 1 }).limit(1);
     // getting the max price per hour
