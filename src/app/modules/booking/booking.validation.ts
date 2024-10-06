@@ -50,14 +50,14 @@ const carBookingValidationSchema = z.object({
 });
 
 
-const updateBookingValidationSchema = z.object({
+const updateBookingStatusValidation = z.object({
     body: z.object({
-        status: z.enum(["pending", "approved", "cancelled"])
+        status: z.enum(["approved", "cancelled"])
     })
 })
 
 
 export const BookingValidation = {
     carBookingValidationSchema,
-    updateBookingValidationSchema
+    updateBookingStatusValidation
 }

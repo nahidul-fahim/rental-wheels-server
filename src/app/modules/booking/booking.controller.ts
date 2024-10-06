@@ -24,7 +24,8 @@ const bookACar = catchAsync(async (req: Request, res: Response) => {
 const updateBooking = catchAsync(async (req: Request, res: Response) => {
     const { bookingId } = req.params;
     const { status } = req.body;
-    const result = await CarBookingServices.updateBookingIntoDb(bookingId, status);
+    const currentUserRole = req.user.userRole;
+    const result = await CarBookingServices.updateBookingIntoDb(bookingId, status, currentUserRole);
 
     sendResponse(res, {
         statusCode: httpStatus.CREATED,

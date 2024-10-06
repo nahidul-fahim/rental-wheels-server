@@ -20,8 +20,8 @@ router.post(
 // update a booking
 router.put(
     "/:bookingId",
-    auth(USER_ROLE.admin),
-    validateRequest(BookingValidation.updateBookingValidationSchema),
+    auth(USER_ROLE.admin, USER_ROLE.user),
+    validateRequest(BookingValidation.updateBookingStatusValidation),
     CarBooking.updateBooking
 )
 
