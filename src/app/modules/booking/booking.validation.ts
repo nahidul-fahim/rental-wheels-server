@@ -52,7 +52,10 @@ const carBookingValidationSchema = z.object({
 
 const updateBookingStatusValidation = z.object({
     body: z.object({
-        status: z.enum(["approved", "cancelled"])
+        status: z.enum(["approved", "cancelled"]).optional(),
+        paidAmount: z.number({
+            invalid_type_error: "Paid amount must be a number!",
+        }).optional()
     })
 })
 

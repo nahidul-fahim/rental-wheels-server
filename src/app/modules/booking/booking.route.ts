@@ -5,9 +5,7 @@ import validateRequest from "../../middlewares/validateRequest";
 import { BookingValidation } from "./booking.validation";
 import { CarBooking } from "./booking.controller";
 
-
 const router = Router();
-
 
 // book a car
 router.post(

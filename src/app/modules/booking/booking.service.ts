@@ -54,7 +54,7 @@ const bookACarIntoDB = async (payload: TCarBooking, user: string) => {
 
 
 // update a booking
-const updateBookingIntoDb = async (bookingId: string, status: string, currentUserRole: string) => {
+const updateBookingIntoDb = async (bookingId: string, payload: Record<string, unknown>, currentUserRole: string) => {
     const isBookingExist = await Booking.findById(bookingId)
     if (!isBookingExist) {
         throw new AppError(httpStatus.NOT_FOUND, "Booking not found!", [])
@@ -62,10 +62,13 @@ const updateBookingIntoDb = async (bookingId: string, status: string, currentUse
     if (isBookingExist?.status === "approved") {
         throw new AppError(httpStatus.CONFLICT, "Booking already approved!", [])
     };
-    if (currentUserRole === "user" && status === "approved") {
+    if ((payload?.paidAmount as number) > 0 && !isBookingExist?.endTime) {
+        throw new AppError(httpStatus.NOT_FOUND, "The car is not returned yet!", [])
+    }
+    if (currentUserRole === "user" && payload?.status === "approved") {
         throw new AppError(httpStatus.UNAUTHORIZED, "You are not authorized to complete the action!")
     }
-    const result = await Booking.findByIdAndUpdate(bookingId, { status }, { new: true })
+    const result = await Booking.findByIdAndUpdate(bookingId, payload, { new: true })
     return result;
 }
 
