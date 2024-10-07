@@ -59,7 +59,7 @@ const updateBookingIntoDb = async (bookingId: string, payload: Record<string, un
     if (!isBookingExist) {
         throw new AppError(httpStatus.NOT_FOUND, "Booking not found!", [])
     };
-    if (isBookingExist?.status === "approved") {
+    if (payload.status === "approved" && isBookingExist?.status === "approved") {
         throw new AppError(httpStatus.CONFLICT, "Booking already approved!", [])
     };
     if ((payload?.paidAmount as number) > 0 && !isBookingExist?.endTime) {
