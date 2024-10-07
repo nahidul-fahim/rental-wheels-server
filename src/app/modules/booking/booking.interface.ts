@@ -10,6 +10,7 @@ export interface TCarBooking {
     user: Types.ObjectId;
     status: "pending" | "approved" | "cancelled";
     date: string;
+    paidAmount?: number;
     startTime: string;
     endTime: null | string;
     totalCost: number;

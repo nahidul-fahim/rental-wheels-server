@@ -66,6 +66,10 @@ const bookingSchema = new Schema<TCarBooking, BookingModel>(
             required: true,
             trim: true,
         },
+        paidAmount: {
+            type: Number,
+            default: 0,
+        },
         paymentMethod: {
             type: String,
             enum: ["cash", "card", "bankTransfer"],
