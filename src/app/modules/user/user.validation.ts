@@ -57,7 +57,7 @@ const updateUserStatusValidationSchema = z.object({
     body: z.object({
         isActive: z.boolean({
             invalid_type_error: "Status must be a boolean"
-        }),
+        }).optional(),
         role: z.enum(["user", "admin"]).optional()
     })
 });
