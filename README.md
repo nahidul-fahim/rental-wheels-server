@@ -1,6 +1,6 @@
 # Rental Wheels
 
-Rental Wheels is a full-stack application for renting cars. This project leverages Node.js, Express, MongoDB, Mongoose and TypeScript to deliver a robust, scalable solution for managing car rentals.
+Rental Wheels is a full-stack application for renting cars. This project leverages Node.js, Express, MongoDB, Mongoose, and TypeScript to deliver a robust, scalable solution for managing car rentals.
 
 ## Table of Contents
 
@@ -13,11 +13,6 @@ Rental Wheels is a full-stack application for renting cars. This project leverag
   - [Installation](#installation)
   - [Configuration](#configuration)
   - [Usage](#usage)
-  - [API Endpoints](#api-endpoints)
-    - [Authentication](#authentication)
-    - [Cars](#cars)
-    - [Bookings](#bookings)
-  - [Thank you for visiting](#thank-you-for-visiting)
 
 ## Introduction
 
@@ -25,28 +20,31 @@ Rental Wheels is designed to streamline the process of renting cars. It provides
 
 ## Features
 
-- User authentication and authorization
-- Cars booking
-- Car add, update, delete features for admin
-- Car rent management for admins
-- Car return system for admin and automatically counts total rent cost based on total rent hours and price per hour for the car
+- User authentication and authorization (JWT-based).
+- Secure password hashing with Bcrypt.
+- Car add, update, delete features for admins.
+- Car booking system for users.
+- Car return management for admins, automatically calculating rental costs based on hours rented.
+- RESTful API structure with proper error handling.
+- Environment configuration for development and production setups.
 
 ## Tech Stack
 
-- **Node.js**: JavaScript runtime environment
-- **Express**: Web framework for Node.js
-- **MongoDB**: NoSQL database
-- **Mongoose**: ODM for MongoDB and Node.js
-- **TypeScript**: Typed superset of JavaScript
-- **Zod**: Schema declaration and validation library for typescript
+- **Node.js**: JavaScript runtime environment.
+- **Express**: Web framework for building RESTful APIs.
+- **MongoDB**: NoSQL database for storing data.
+- **Mongoose**: ODM for MongoDB and Node.js.
+- **TypeScript**: Typed superset of JavaScript for safer and more scalable code.
+- **Zod**: Schema declaration and validation library for TypeScript.
 
 ## Prerequisites
 
 Before you begin, ensure you have met the following requirements:
 
-- Node.js (v14.x or later)
-- MongoDB (v4.x or later)
-- npm (v6.x or later)
+- **Node.js** (v14.x or later)
+- **npm** (v6.x or later)
+- **MongoDB** (v4.x or later)
+- **Cloudinary** account for car images (optional, if you're using cloud image storage).
 
 ## Installation
 
@@ -78,6 +76,15 @@ Follow these steps to set up the project locally:
     BCRYPT_SALT=12
     JWT_ACCESS_SECRET=your_jwt_secret
     JWT_ACCESS_EXPIRES_IN=1d
+    CLOUDINARY_CLOUD_NAME=your_cloudinary_name
+    CLOUDINARY_API_KEY=your_cloudinary_api_key
+    CLOUDINARY_SECRET_KEY=your_cloudinary_secret_key
+    SMTP_HOST=your_smtp_host
+    SMTP_PORT=your_smtp_port
+    SMTP_USER=your_smtp_user
+    SMTP_PASS=your_smtp_password
+    SMTP_FROM_EMAIL=your_email_address
+    CLIENT_URL=https://rental-wheels-a5.vercel.app
     ```
 
 2. Replace the placeholder values with your actual configuration details.
@@ -88,118 +95,6 @@ To run the application locally:
 
 ```bash
 npm run dev
-```
-
-The application will be available at `http://localhost:5000`.
-
-## API Endpoints
-
-### Authentication
-
-- **POST /api/auth/signup**: Register a new user
-
-```json
-{
-  "name": "John Doe",
-  "email": "johndoe@example.com",
-  "role": "user",  // role can be user or admin
-  "password": "password123",
-  "phone": "1234567890",
-  "address": "123 Main St, City, Country"
-}
-```
-
-- **POST /api/auth/signin**: Sign in a user
-
-```json
-{
-  "email": "johndoe@example.com",
-  "password": "password123"
-}
-```
-
-### Cars
-
-- **POST /api/cars**: Add a new car (Admin only)
-
-```javascript
-Authorization: 
-Bearer your_access_token
-```
-
-```json
-{
-  "name": "Tesla Model 3",
-  "description": "An electric car with advanced technology and performance.",
-  "color": "White",
-  "isElectric": true,
-  "features": ["AC", "Bluetooth", "Long Range Battery"],
-  "pricePerHour": 500
-}
-```
-
-- **GET /api/cars**: Get all cars
-
-- **GET /api/cars/:id**: Get single car
-
-- **PUT /api/cars/:id**: Update a car details (Admin only)
-
-```json
-{
-     "color": "Black",
-}
-```
-
-- **DELETE /api/cars/:id**: Delete a car (Admin only)
-
-```javascript
-Authorization: 
-Bearer your_access_token
-```
-
-### Bookings
-
-- **GET /api/bookings**: Get all bookings (Admin only)
-
-Query search:
-
-`/api/bookings?carId=608a6d8d03a1b40012abcdef&date=2024-06-15`
-
-- **POST /api/bookings**: Book a car (User only)
-
-```javascript
-Authorization: 
-Bearer your_access_token
-```
-
-```json
-{
-   "carId": "60d9c4e4f3b4b544b8b8d1c7",
-   "date": "2024-06-15",
-   "startTime": "13:00",
-}
-```
-
-- **GET /api/bookings/my-bookings**: Get user's bookings (User only)
-
-```javascript
-Authorization: 
-Bearer your_access_token
-```
-
-- **PUT /api/cars/return**: Return car (Admin only)
-
-```javascript
-Authorization: 
-Bearer your_access_token
-```
-
-```json
-{
-   "bookingId": "60d9c4e4f3b4b544b8b8d1c7",
-   "endTime": "15:00"
-}
-```
 
 
-## Thank you for visiting
+##Thank you for visiting.
