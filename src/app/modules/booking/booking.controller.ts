@@ -63,10 +63,23 @@ const getAllBookings = catchAsync(async (req: Request, res: Response) => {
     })
 })
 
+// get all dashboard info
+const getDashboardInfo = catchAsync(async (req: Request, res: Response) => {
+    const result = await CarBookingServices.getDashboardInfoFromDb();
+
+    sendResponse(res, {
+        statusCode: httpStatus.CREATED,
+        success: true,
+        message: "Dashboard info retrieved successfully",
+        data: result
+    })
+})
+
 
 export const CarBooking = {
     bookACar,
     getUsersBookings,
     getAllBookings,
-    updateBooking
+    updateBooking,
+    getDashboardInfo
 }

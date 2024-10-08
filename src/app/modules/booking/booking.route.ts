@@ -37,6 +37,13 @@ router.get(
     CarBooking.getAllBookings
 )
 
+// get all dashboard info
+router.get(
+    "/dashboard-info",
+    auth(USER_ROLE.admin),
+    CarBooking.getDashboardInfo
+)
+
 
 
 export const CarBookingRoutes = router;

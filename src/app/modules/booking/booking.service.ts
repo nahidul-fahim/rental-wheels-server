@@ -4,6 +4,7 @@ import { TCarBooking } from "./booking.interface";
 import { Booking } from "./booking.model";
 import { Car } from "../car/car.model";
 import mongoose from "mongoose";
+import { User } from "../user/user.model";
 
 
 // book a car services
@@ -113,9 +114,30 @@ const getAllBookingsFromDb = async (query: Record<string, unknown>) => {
 }
 
 
+// get all dashboard info
+const getDashboardInfoFromDb = async () => {
+    const totalBookingsData = await Booking.find();
+    const totalBookings = totalBookingsData.length;
+    const availableCars = (await Car.find({ status: 'available' })).length;
+    // Calculate total paidAmount using aggregation
+    const totalPaidAmount = await Booking.aggregate([
+        {
+            $group: {
+                _id: null,
+                totalPaidAmount: { $sum: "$paidAmount" }
+            }
+        }
+    ]);
+    const paidAmount = totalPaidAmount.length > 0 ? totalPaidAmount[0].totalPaidAmount : 0;
+    const activeUser = (await User.find({ isActive: true })).length;
+    return { totalBookings, availableCars, paidAmount, activeUser };
+}
+
+
 export const CarBookingServices = {
     bookACarIntoDB,
     getUsersBookingsFromDb,
     getAllBookingsFromDb,
-    updateBookingIntoDb
+    updateBookingIntoDb,
+    getDashboardInfoFromDb
 }
