@@ -1,5 +1,10 @@
 # Rental Wheels
 
+<div align="center">
+  <h1>Rental Wheels</h1>
+  <p><a href="https://rental-wheels-a5.vercel.app/" target="_blank">Live Demo</a></p>
+</div>
+
 Rental Wheels is a full-stack application for renting cars. This project leverages Node.js, Express, MongoDB, Mongoose, and TypeScript to deliver a robust, scalable solution for managing car rentals.
 
 ## Table of Contents
@@ -95,6 +100,6 @@ To run the application locally:
 
 ```bash
 npm run dev
-
+```
 
 ##Thank you for visiting.
