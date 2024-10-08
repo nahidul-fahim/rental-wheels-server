@@ -119,7 +119,7 @@ const getDashboardInfoFromDb = async () => {
     const totalBookingsData = await Booking.find();
     const totalBookings = totalBookingsData.length;
     const availableCars = (await Car.find({ status: 'available' })).length;
-    // Calculate total paidAmount using aggregation
+    // total paid amount
     const totalPaidAmount = await Booking.aggregate([
         {
             $group: {
