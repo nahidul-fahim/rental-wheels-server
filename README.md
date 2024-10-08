@@ -18,6 +18,7 @@ Rental Wheels is a full-stack application for renting cars. This project leverag
   - [Installation](#installation)
   - [Configuration](#configuration)
   - [Usage](#usage)
+  - [Thank you for visiting.](#thank-you-for-visiting)
 
 ## Introduction
 
@@ -102,4 +103,4 @@ To run the application locally:
 npm run dev
 ```
 
-##Thank you for visiting.
+## Thank you for visiting.
